@@ -22,16 +22,7 @@ def run():
 
     ## Font Size
     ## Font terbesar
-    st.write('# Halo')
-    st.write('## Halo')
-
-    ## Bold
-    st.write('**Tes**')
-    ## Italic
-    st.write('*Tes*')
-
-    ## Membuat batas dengan garis lurus
-    st.markdown('---')
+    st.write('# Dataframe')
 
     # fetch dataset
     mushroom = fetch_ucirepo(id=73)
@@ -93,15 +84,67 @@ def run():
 
     st.dataframe(df)
 
+    st.markdown('---')
 
+    st.write('# EDA')
 
+    st.write('## Distribution of Edible vs. Poisonous Mushrooms')
 
+    fig, ax = plt.subplots()
+    sns.countplot(x='poisonous', data=df, ax=ax)
+    plt.title("Distribution of Edible vs. Poisonous Mushrooms")
+    st.pyplot(fig)
 
+    value_counts = df['poisonous'].value_counts()
+    st.write(value_counts)
 
+    st.markdown("Dari dataset dapat dilihat Data `edible` ada 4208 lebih banyak dariapda `poisonous` ada 3916.")
 
+    st.markdown('---')
 
+    st.write('## Distribution of Mushrooms by odor')
 
+    feature_to_plot = 'odor'
+    feature_to_plot = 'odor'
+    fig, ax = plt.subplots()
+    df[feature_to_plot].value_counts().plot(kind='bar', ax=ax)
+    plt.title(f"Distribution of Mushrooms by {feature_to_plot}")
+    plt.xlabel(feature_to_plot)
+    plt.ylabel("Count")
+    st.pyplot(fig)
 
+    st.markdown("Mushroom terbanyak yaitu dengan `odor` = `none`, yaitu tidak ada bau.")
+
+    st.markdown('---')
+
+    st.markdown('## Distribution of odor by Class')
+
+    feature_to_analyze = 'odor'
+    fig, ax = plt.subplots(figsize=(6, 4))
+    sns.countplot(x=feature_to_analyze, hue='poisonous', data=df, ax=ax)
+    plt.title(f"Distribution of {feature_to_analyze} by Class")
+    st.pyplot(fig)
+
+    st.markdown("Dapat dilihat dari hasil plot diatas, bahwa jamur yang `foul_odor` bisa di kategorikan sebagai poisonous")
+
+    st.markdown('---')
+    st.write('## Distribution of cap-shape by Class')
+    feature_to_analyze = 'cap-shape'
+    fig, ax = plt.subplots(figsize=(6, 4))
+    sns.countplot(x=feature_to_analyze, hue='poisonous', data=df)
+    plt.title(f"Distribution of {feature_to_analyze} by Class")
+    st.pyplot(fig)
+    st.markdown('Dari dataset, pada umumnya mushroom banyak yang memiliki `cap-shape` `convex` dan `flat`, baik pada jamur `poisonous` maupun `edible`.')
+
+    st.markdown('---')
+
+    st.write('## Distribution of habitat by Class')
+    feature_to_analyze = 'habitat'
+    fig, ax = plt.subplots(figsize=(6, 4))
+    sns.countplot(x=feature_to_analyze, hue='poisonous', data=df)
+    plt.title(f"Distribution of {feature_to_analyze} by Class")
+    st.pyplot(fig)
+    st.markdown('Dari dataset, mushroom `poisonous` lebih banyak terletak pada habitat `woods` disusul dengan `paths`.')
 
 
 
